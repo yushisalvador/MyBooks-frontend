@@ -1,11 +1,13 @@
 <template>
   <h1>Hello world!!</h1>
+  <AllBooks />
 </template>
 
 <script>
+import AllBooks from "./components/AllBooks.vue";
 export default {
   name: "App",
-  components: {},
+  components: { AllBooks },
 };
 </script>
 
