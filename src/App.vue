@@ -1,40 +1,29 @@
 <template>
-  <h1>Hello world!!</h1>
-  <AllBooks :allBooks="allBooks" />
+  <NavMenu />
+  <Home />
 </template>
 
 <script>
-import AllBooks from "./components/AllBooks.vue";
-import axios from "axios";
+import Home from "../src/views/Home";
 
 export default {
   name: "App",
-  components: { AllBooks },
-
-  data() {
-    return {
-      allBooks: [],
-    };
-  },
-  methods: {
-    async fetchBooks() {
-      let books = await axios.get("http://localhost:9000/books");
-      this.allBooks = books.data;
-    },
-  },
-  created() {
-    this.fetchBooks();
-  },
+  components: { Home },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.btn {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 4px;
+  border-radius: 8px;
 }
 </style>
