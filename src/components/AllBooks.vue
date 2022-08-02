@@ -18,7 +18,7 @@
       <td>{{ book.date_finished.toString().slice(0, 10) }}</td>
       <td>
         <button>Edit</button>
-        <button @click="deleteEvent(book.id)">Delete</button>
+        <button @click="deleteBook(book.id)">Delete</button>
       </td>
     </tr>
   </table>
@@ -37,10 +37,14 @@ export default {
     };
   },
   methods: {
-    async deleteEvent(id) {
-      if (confirm("Are you sure?")) {
-        await axios.delete(`http://localhost:9000/books?id=${id}`);
-        alert("Done!");
+    async deleteBook(id) {
+      try {
+        if (confirm("Are you sure?")) {
+          await axios.delete(`http://localhost:9000/books?id=${id}`);
+          alert("Done!");
+        }
+      } catch (error) {
+        alert("Something went wrong!");
       }
     },
   },

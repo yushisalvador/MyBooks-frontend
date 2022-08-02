@@ -1,14 +1,15 @@
 <template>
   <NavMenu />
-  <Home />
+
+  <router-view></router-view>
 </template>
 
 <script>
-import Home from "../src/views/Home";
+// import Home from "../src/views/Home";
 
 export default {
   name: "App",
-  components: { Home },
+  // components: { Home },
 };
 </script>
 
