@@ -1,10 +1,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
-
+import store from "./vuex.js";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import MyBooks from "./views/MyBooks";
 
 const routes = [
   {
@@ -19,6 +20,10 @@ const routes = [
     path: "/register",
     component: Register,
   },
+  {
+    path: "/mybooks",
+    component: MyBooks,
+  },
 ];
 
 const router = createRouter({
@@ -26,4 +31,4 @@ const router = createRouter({
   routes,
 });
 
-createApp(App).use(router).mount("#app");
+createApp(App).use(router).use(store).mount("#app");
