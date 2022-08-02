@@ -23,7 +23,10 @@
       </form>
 
       <div>
-        <div>Don't have an account? <span>Sign up!</span></div>
+        <div>
+          Don't have an account?
+          <span> <router-link to="/register">Sign up!</router-link></span>
+        </div>
       </div>
     </div>
   </div>
