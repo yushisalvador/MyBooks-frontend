@@ -1,6 +1,9 @@
 <template>
   <NavBar />
-  <div>
+  <div class="container">
+    <div class="buttonComponent">
+      <ButtonComponent text="Add a book" className="btn" />
+    </div>
     <div v-if="myBooks.length === 0">
       You dont have any books! Try adding some!
     </div>
@@ -34,6 +37,7 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import NavBar from "@/components/NavBar.vue";
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
   name: "MyBooks",
@@ -44,8 +48,8 @@ export default {
   },
   methods: {
     async getMyBooks() {
-      const username = localStorage.getItem("user");
-      const token = localStorage.getItem("token");
+      const username = sessionStorage.getItem("user");
+      const token = sessionStorage.getItem("token");
       let books = await axios.get(
         `http://localhost:9000/books/mybooks?username=${username}`,
         {
@@ -64,7 +68,7 @@ export default {
   created() {
     this.getMyBooks();
   },
-  components: { NavBar },
+  components: { NavBar, ButtonComponent },
 };
 </script>
 
@@ -79,5 +83,17 @@ td {
 
 table {
   margin: 0 auto;
+}
+
+.buttonComponent {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
