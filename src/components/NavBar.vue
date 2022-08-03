@@ -2,17 +2,18 @@
   <nav v-if="!user" class="not-logged-in">
     <div class="not-logged-in-nav">
       <div class="login option">
-        <router-link to="/login" class="navi"> Login</router-link>
+        <router-link to="/login" class="menu"> Login</router-link>
       </div>
       <div class="signup option">
-        <router-link to="/register" class="navi"> Signup</router-link>
+        <router-link to="/register" class="menu"> Signup</router-link>
       </div>
     </div>
   </nav>
   <nav v-if="user" class="logged-in">
-    <div class="greeting">Hello, {{ user.username }}!</div>
-    <div class="right">
-      <div class="greeting">My Books</div>
+    <div class="navi">
+      <router-link to="/mybooks" class="menu">My Books</router-link>
+      <router-link to="/" class="menu">All Books</router-link>
+
       <div class="out-button" @click="logout">Logout</div>
     </div>
   </nav>
@@ -24,8 +25,8 @@ export default {
   name: "NavBar",
   methods: {
     logout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
       this.$store.dispatch("user", null);
       this.$router.push("/login");
     },
@@ -42,19 +43,17 @@ nav {
 }
 
 .logged-in {
-  background: pink;
+  background: #d7acd4;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: end;
   padding-bottom: 10px;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 
-.right {
-  display: flex;
-  gap: 30px;
+.out-button {
+  margin-right: 30px;
 }
-
 .out-button:hover {
   color: white;
   cursor: pointer;
@@ -82,13 +81,18 @@ nav {
   font-size: 20px;
 }
 
-.option:hover {
+.menu:hover {
   cursor: pointer;
   color: white;
 }
 
-.navi {
+.menu {
   text-decoration: none;
   color: black;
+}
+
+.navi {
+  display: flex;
+  gap: 30px;
 }
 </style>
