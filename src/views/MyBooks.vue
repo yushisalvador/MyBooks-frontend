@@ -1,13 +1,7 @@
 <template>
   <NavBar />
+  <Modal />
   <div class="container">
-    <div class="buttonComponent">
-      <ButtonComponent text="Add a book" className="btn" />
-    </div>
-    <div v-if="myBooks.length === 0">
-      You dont have any books! Try adding some!
-    </div>
-
     <table v-if="myBooks.length > 0">
       <tr>
         <th>Author</th>
@@ -37,7 +31,7 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import NavBar from "@/components/NavBar.vue";
-import ButtonComponent from "@/components/ButtonComponent.vue";
+import Modal from "../components/Modal.vue";
 
 export default {
   name: "MyBooks",
@@ -68,7 +62,7 @@ export default {
   created() {
     this.getMyBooks();
   },
-  components: { NavBar, ButtonComponent },
+  components: { NavBar, Modal },
 };
 </script>
 
@@ -83,12 +77,6 @@ td {
 
 table {
   margin: 0 auto;
-}
-
-.buttonComponent {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 }
 
 .container {
