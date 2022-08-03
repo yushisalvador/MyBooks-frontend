@@ -15,7 +15,7 @@
         {{ book.title }}
       </td>
       <td>{{ book.registered_by }}</td>
-      <td>{{ book.date_finished.toString().slice(0, 10) }}</td>
+      <td contenteditable>{{ book.date_finished.toString().slice(0, 10) }}</td>
       <td>
         <button>Edit</button>
         <button @click="deleteBook(book.id)">Delete</button>
