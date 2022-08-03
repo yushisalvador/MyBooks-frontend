@@ -1,14 +1,14 @@
 import { createStore } from "vuex";
 
 const state = {
-  user: null,
+  user: sessionStorage.getItem("user") || null,
+  token: sessionStorage.getItem("token") || null,
 };
 
 const store = createStore({
   state,
   getters: {
     user: (state) => {
-      console.log("STAETUSUSPNLI;", state.user);
       return state.user;
     },
   },
