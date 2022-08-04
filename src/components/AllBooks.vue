@@ -1,11 +1,14 @@
 <template>
+  <div v-if="user">
+    <Modal header="Add a book!" />
+  </div>
   <table>
     <tr>
       <th>Author</th>
       <th>Title</th>
       <th>Registered By</th>
       <th>Date Finished</th>
-      <th>Options</th>
+      <th v-if="user">Options</th>
     </tr>
     <tr :key="book.id" v v-for="book in allBooks">
       <td>
@@ -15,9 +18,11 @@
         {{ book.title }}
       </td>
       <td>{{ book.registered_by }}</td>
-      <td contenteditable>{{ book.date_finished.toString().slice(0, 10) }}</td>
       <td>
-        <button>Edit</button>
+        {{ book.date_finished.toString().slice(0, 10) }}
+        <button v-if="book.registered_by === this.user">edit</button>
+      </td>
+      <td v-if="user">
         <button @click="deleteBook(book.id)">Delete</button>
       </td>
     </tr>
@@ -26,10 +31,14 @@
 
 <script>
 import axios from "axios";
+import Modal from "./Modal.vue";
+import { mapGetters } from "vuex";
+
 export default {
   name: "AllBooks",
   props: {
     allBooks: Array,
+    header: String,
   },
   data() {
     return {
@@ -48,6 +57,10 @@ export default {
       }
     },
   },
+  components: { Modal },
+  computed: {
+    ...mapGetters(["user"]),
+  },
 };
 </script>
 
@@ -62,5 +75,6 @@ td {
 
 table {
   margin: 0 auto;
+  margin-top: 30px;
 }
 </style>

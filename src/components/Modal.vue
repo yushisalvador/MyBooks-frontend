@@ -16,7 +16,7 @@
     </transition>
     <transition name="slide" appear>
       <div class="modal" v-if="showModal">
-        <h3>Share us what you have!</h3>
+        <h3>{{ header }}</h3>
         <form>
           <label>Title</label>
           <div>
@@ -35,7 +35,6 @@
         <div class="button-container">
           <ButtonComponent @btn-click="addNewBook" text="Add" />
           <ButtonComponent @btn-click="showModal = false" text="Cancel" />
-          {{ user }}
         </div>
       </div>
     </transition>
@@ -57,6 +56,9 @@ export default {
       date_finished: null,
       registered_by: null,
     };
+  },
+  props: {
+    header: String,
   },
   components: { ButtonComponent },
   methods: {

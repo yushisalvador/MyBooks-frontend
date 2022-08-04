@@ -1,5 +1,5 @@
 <template>
-  <Modal />
+  <Modal header="Add a book!" />
   <div class="container">
     <table v-if="myBooks.length > 0">
       <tr>
@@ -17,9 +17,14 @@
         <td>{{ book.title }}</td>
         <td>{{ book.registered_by }}</td>
         <td>{{ book.date_finished.toString().slice(0, 10) }}</td>
-        <td>
-          <button>Edit</button>
-          <button>Delete</button>
+        <td class="options">
+          <div class="edit-container">
+            <button @click="manageForm(book.id)">{{ text }}</button>
+            <div class="edit" v-if="showEditForm === true && index === book.id">
+              <EditForm :bookId="book.id" />
+            </div>
+            <button class="delete">Delete</button>
+          </div>
         </td>
       </tr>
     </table>
@@ -29,13 +34,17 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-// import NavBar from "@/components/NavBar.vue";
 import Modal from "../components/Modal.vue";
+import EditForm from "@/components/EditForm.vue";
 export default {
   name: "MyBooks",
   data() {
     return {
       myBooks: [],
+      showEditForm: false,
+      index: null,
+      text: "Edit",
+      date_finished: null,
     };
   },
   methods: {
@@ -51,6 +60,15 @@ export default {
       );
       this.myBooks = books.data;
     },
+    manageForm(id) {
+      this.showEditForm = !this.showEditForm;
+      this.index = id;
+      if (this.showEditForm === true) {
+        this.text = "Close";
+      } else {
+        this.text = "Edit";
+      }
+    },
   },
   computed: {
     ...mapGetters(["user"]),
@@ -58,11 +76,32 @@ export default {
   created() {
     this.getMyBooks();
   },
-  components: { Modal },
+  components: { Modal, EditForm },
 };
 </script>
 
 <style scoped>
+.edit-container {
+  position: relative;
+}
+.edit {
+  background: white;
+  border: solid 1px rgb(241, 173, 241);
+  position: absolute;
+  padding: 15px;
+  top: 30px;
+  z-index: 98;
+  border-radius: 8px;
+}
+
+.delete {
+  margin-left: 10px;
+}
+button {
+  margin: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
 table,
 th,
 td {
@@ -73,6 +112,7 @@ td {
 
 table {
   margin: 0 auto;
+  margin-top: 30px;
 }
 
 .container {

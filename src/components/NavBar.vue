@@ -2,6 +2,7 @@
   <nav v-if="!user" class="not-logged-in">
     <div class="not-logged-in-nav">
       <div class="login option">
+        <router-link to="/" class="menu all">All Books</router-link>
         <router-link to="/login" class="menu"> Login</router-link>
       </div>
       <div class="signup option">
@@ -57,6 +58,9 @@ nav {
 .out-button:hover {
   color: white;
   cursor: pointer;
+}
+.all {
+  margin-right: 10px;
 }
 
 .not-logged-in {
