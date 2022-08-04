@@ -20,10 +20,20 @@
       <td>{{ book.registered_by }}</td>
       <td>
         {{ book.date_finished.toString().slice(0, 10) }}
-        <button v-if="book.registered_by === this.user">edit</button>
       </td>
-      <td v-if="user">
-        <button @click="deleteBook(book.id)">Delete</button>
+      <td v-if="user" class="options">
+        <div class="edit-container">
+          <button
+            v-if="book.registered_by === this.user"
+            @click="manageForm(book.id)"
+          >
+            {{ text }}
+          </button>
+          <div class="edit" v-if="showEditForm === true && index === book.id">
+            <EditForm :bookId="book.id" />
+          </div>
+          <button @click="deleteBook(book.id)">Delete</button>
+        </div>
       </td>
     </tr>
   </table>
@@ -33,6 +43,7 @@
 import axios from "axios";
 import Modal from "./Modal.vue";
 import { mapGetters } from "vuex";
+import EditForm from "./EditForm.vue";
 
 export default {
   name: "AllBooks",
@@ -43,6 +54,9 @@ export default {
   data() {
     return {
       id: null,
+      showEditForm: false,
+      index: null,
+      text: "Edit",
     };
   },
   methods: {
@@ -56,8 +70,17 @@ export default {
         alert("Something went wrong!");
       }
     },
+    manageForm(id) {
+      this.showEditForm = !this.showEditForm;
+      this.index = id;
+      if (this.showEditForm === true) {
+        this.text = "Close";
+      } else {
+        this.text = "Edit";
+      }
+    },
   },
-  components: { Modal },
+  components: { Modal, EditForm },
   computed: {
     ...mapGetters(["user"]),
   },
@@ -65,6 +88,18 @@ export default {
 </script>
 
 <style scoped>
+.edit-container {
+  position: relative;
+}
+.edit {
+  background: white;
+  border: solid 1px rgb(241, 173, 241);
+  position: absolute;
+  padding: 15px;
+  top: 30px;
+  z-index: 98;
+  border-radius: 8px;
+}
 table,
 th,
 td {
