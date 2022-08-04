@@ -1,11 +1,14 @@
 <template>
+  <div v-if="user">
+    <Modal header="Add a book!" />
+  </div>
   <table>
     <tr>
       <th>Author</th>
       <th>Title</th>
       <th>Registered By</th>
       <th>Date Finished</th>
-      <th>Options</th>
+      <th v-if="user">Options</th>
     </tr>
     <tr :key="book.id" v v-for="book in allBooks">
       <td>
@@ -15,10 +18,22 @@
         {{ book.title }}
       </td>
       <td>{{ book.registered_by }}</td>
-      <td>{{ book.date_finished.toString().slice(0, 10) }}</td>
       <td>
-        <button>Edit</button>
-        <button @click="deleteBook(book.id)">Delete</button>
+        {{ book.date_finished.toString().slice(0, 10) }}
+      </td>
+      <td v-if="user" class="options">
+        <div class="edit-container">
+          <button
+            v-if="book.registered_by === this.user"
+            @click="manageForm(book.id)"
+          >
+            {{ text }}
+          </button>
+          <div class="edit" v-if="showEditForm === true && index === book.id">
+            <EditForm :bookId="book.id" />
+          </div>
+          <button @click="deleteBook(book.id)">Delete</button>
+        </div>
       </td>
     </tr>
   </table>
@@ -26,14 +41,22 @@
 
 <script>
 import axios from "axios";
+import Modal from "./Modal.vue";
+import { mapGetters } from "vuex";
+import EditForm from "./EditForm.vue";
+
 export default {
   name: "AllBooks",
   props: {
     allBooks: Array,
+    header: String,
   },
   data() {
     return {
       id: null,
+      showEditForm: false,
+      index: null,
+      text: "Edit",
     };
   },
   methods: {
@@ -47,11 +70,36 @@ export default {
         alert("Something went wrong!");
       }
     },
+    manageForm(id) {
+      this.showEditForm = !this.showEditForm;
+      this.index = id;
+      if (this.showEditForm === true) {
+        this.text = "Close";
+      } else {
+        this.text = "Edit";
+      }
+    },
+  },
+  components: { Modal, EditForm },
+  computed: {
+    ...mapGetters(["user"]),
   },
 };
 </script>
 
 <style scoped>
+.edit-container {
+  position: relative;
+}
+.edit {
+  background: white;
+  border: solid 1px rgb(241, 173, 241);
+  position: absolute;
+  padding: 15px;
+  top: 30px;
+  z-index: 98;
+  border-radius: 8px;
+}
 table,
 th,
 td {
@@ -62,5 +110,6 @@ td {
 
 table {
   margin: 0 auto;
+  margin-top: 30px;
 }
 </style>

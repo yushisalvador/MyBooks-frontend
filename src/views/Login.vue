@@ -51,8 +51,8 @@ export default {
           username: this.username,
           pass: this.password,
         });
-        localStorage.setItem("user", response.data.username);
-        localStorage.setItem("token", response.data.accessToken);
+        sessionStorage.setItem("user", response.data.username);
+        sessionStorage.setItem("token", response.data.accessToken);
         this.$store.dispatch("user", response.data);
         if (response.status === 200) {
           await this.$router.push("/");

@@ -31,4 +31,10 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.path === "/mybooks" && !store.getters.user) next({ path: "/login" });
+  if (to.path === "/login" && store.getters.user) next({ path: "/" });
+  else next();
+});
+
 createApp(App).use(router).use(store).mount("#app");
