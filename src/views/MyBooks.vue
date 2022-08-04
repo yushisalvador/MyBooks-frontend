@@ -32,7 +32,6 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import NavBar from "@/components/NavBar.vue";
 import Modal from "../components/Modal.vue";
-
 export default {
   name: "MyBooks",
   data() {
@@ -53,7 +52,6 @@ export default {
         }
       );
       this.myBooks = books.data;
-      console.log(books);
     },
   },
   computed: {
