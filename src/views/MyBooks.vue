@@ -1,5 +1,4 @@
 <template>
-  <NavBar />
   <Modal />
   <div class="container">
     <table v-if="myBooks.length > 0">
@@ -30,7 +29,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import NavBar from "@/components/NavBar.vue";
+// import NavBar from "@/components/NavBar.vue";
 import Modal from "../components/Modal.vue";
 export default {
   name: "MyBooks",
@@ -41,10 +40,9 @@ export default {
   },
   methods: {
     async getMyBooks() {
-      const username = sessionStorage.getItem("user");
       const token = sessionStorage.getItem("token");
       let books = await axios.get(
-        `http://localhost:9000/books/mybooks?username=${username}`,
+        `http://localhost:9000/books/mybooks?username=${this.user}`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -60,7 +58,7 @@ export default {
   created() {
     this.getMyBooks();
   },
-  components: { NavBar, Modal },
+  components: { Modal },
 };
 </script>
 

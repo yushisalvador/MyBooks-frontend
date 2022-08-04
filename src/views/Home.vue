@@ -1,17 +1,17 @@
 <template>
-  <NavBar />
-
-  <AllBooks :allBooks="allBooks" />
+  <div>
+    <AllBooks :allBooks="allBooks" />
+  </div>
 </template>
 
 <script>
 import AllBooks from "../components/AllBooks.vue";
 import axios from "axios";
-import NavBar from "../components/NavBar.vue";
 import { mapGetters } from "vuex";
+
 export default {
   name: "HomePage",
-  components: { AllBooks, NavBar },
+  components: { AllBooks },
 
   data() {
     return {

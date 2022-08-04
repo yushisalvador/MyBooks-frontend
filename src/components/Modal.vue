@@ -20,21 +20,22 @@
         <form>
           <label>Title</label>
           <div>
-            <input type="text" class="text" />
+            <input type="text" class="text" v-model="title" />
           </div>
 
           <label>Author</label>
           <div>
-            <input type="text" class="text" />
+            <input type="text" class="text" v-model="author" />
           </div>
           <label>Date finished</label>
           <div>
-            <input type="date" class="date" />
+            <input type="date" class="date" v-model="date_finished" />
           </div>
         </form>
         <div class="button-container">
-          <ButtonComponent @btn-click="showModal = false" text="Add" />
+          <ButtonComponent @btn-click="addNewBook" text="Add" />
           <ButtonComponent @btn-click="showModal = false" text="Cancel" />
+          {{ user }}
         </div>
       </div>
     </transition>
@@ -43,15 +44,40 @@
 
 <script>
 import ButtonComponent from "./ButtonComponent.vue";
+import { mapGetters } from "vuex";
+import axios from "axios";
 
 export default {
   name: "ModalComponent",
   data() {
     return {
       showModal: false,
+      author: null,
+      title: null,
+      date_finished: null,
+      registered_by: null,
     };
   },
   components: { ButtonComponent },
+  methods: {
+    async addNewBook() {
+      const postObj = {
+        author: this.author,
+        title: this.title,
+        date_finished: this.date_finished,
+        registered_by: this.user,
+      };
+      const res = await axios.post("http://localhost:9000/books", postObj);
+      if (res.status === 200) {
+        this.showModal = false;
+      } else {
+        alert("Something went wrong!");
+      }
+    },
+  },
+  computed: {
+    ...mapGetters(["user"]),
+  },
 };
 </script>
 
@@ -72,7 +98,8 @@ label {
 }
 
 input.text {
-  padding-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   border: black solid 0.8px;
   border-radius: 10px;
 }
