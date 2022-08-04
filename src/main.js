@@ -33,6 +33,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.path === "/mybooks" && !store.getters.user) next({ path: "/login" });
+  if (to.path === "/login" && store.getters.user) next({ path: "/" });
   else next();
 });
 
