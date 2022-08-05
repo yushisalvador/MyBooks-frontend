@@ -36,7 +36,7 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import Modal from "../components/Modal.vue";
 import EditForm from "@/components/EditForm.vue";
-const api = "https://little-world-of-books.herokuapp.com";
+const api = process.env.VUE_APP_API_URL;
 
 export default {
   name: "MyBooks",

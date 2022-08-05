@@ -34,7 +34,7 @@
 
 <script>
 import axios from "axios";
-const api = "https://little-world-of-books.herokuapp.com";
+const api = process.env.VUE_APP_API_URL;
 
 export default {
   name: "LoginPage",

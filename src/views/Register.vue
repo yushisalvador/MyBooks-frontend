@@ -30,7 +30,7 @@
 import { useRouter } from "vue-router";
 import axios from "axios";
 
-const api = "https://little-world-of-books.herokuapp.com";
+const api = process.env.VUE_APP_API_URL;
 
 export default {
   name: "RegistrationPage",
@@ -38,12 +38,13 @@ export default {
     return {
       username: "",
       password: "",
+      error: "",
     };
   },
   methods: {
     async register() {
-      if ((this.username.length > 4) | (this.password.length > 5)) {
-        alert("username & password must contain at least 5 characters!");
+      if (this.username.length < 5 || this.password.length < 5) {
+        alert("username & password must contain at least 6 characters!");
       }
       const router = useRouter();
       try {
@@ -54,9 +55,12 @@ export default {
         if (req.status === 201) {
           alert("succefully signed up! Redirecting you to our login screen!");
           await router.push("/login");
+        } else if (req.status === 409) {
+          this.error =
+            "A user with this username already exists. Please choose a different username.";
         }
       } catch {
-        alert("Failed to sign up. Please try again with a different username.");
+        alert("Failed to sign up. This is likely due to a server error.");
       }
     },
   },
