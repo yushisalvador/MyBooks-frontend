@@ -36,7 +36,7 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import Modal from "../components/Modal.vue";
 import EditForm from "@/components/EditForm.vue";
-const api = process.env.VUE_APP_API_URL;
+const api = "https://little-world-of-books.herokuapp.com";
 
 export default {
   name: "MyBooks",
@@ -52,14 +52,11 @@ export default {
   methods: {
     async getMyBooks() {
       const token = sessionStorage.getItem("token");
-      let books = await axios.get(
-        `${api}/books/mybooks?username=${this.user}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      let books = await axios.get(`${api}books/mybooks?username=${this.user}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
       this.myBooks = books.data;
     },
     manageForm(id) {
