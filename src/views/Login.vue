@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="sub">
-      <div>Welcome to Library!</div>
+      <div>Welcome to Little World Of Books!!</div>
       <form @submit.prevent="login">
         <label>Username</label>
         <input
