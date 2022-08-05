@@ -52,11 +52,14 @@ export default {
   methods: {
     async getMyBooks() {
       const token = sessionStorage.getItem("token");
-      let books = await axios.get(`${api}books/mybooks?username=${this.user}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      let books = await axios.get(
+        `${api}/books/mybooks?username=${this.user}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
       this.myBooks = books.data;
     },
     manageForm(id) {
@@ -94,7 +97,7 @@ export default {
 }
 
 .delete {
-  margin-left: 10px;
+  margin-left: 8px;
 }
 button {
   margin: 8px;
@@ -106,7 +109,7 @@ th,
 td {
   border: 1px solid;
   padding: 10px;
-  width: 60vw;
+  width: 70vw;
 }
 
 table {
