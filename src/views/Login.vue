@@ -25,7 +25,7 @@
       <div>
         <div>
           Don't have an account?
-          <span> <router-link to="/register">Sign up!</router-link></span>
+          <span> <router-link to="/register">Sign up now!</router-link></span>
         </div>
       </div>
     </div>
