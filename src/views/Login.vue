@@ -34,18 +34,20 @@
 
 <script>
 import axios from "axios";
-
+const api = process.env.VUE_APP_API_URL;
 export default {
   name: "LoginPage",
   data() {
     return {
       username: "",
       password: "",
+      error: "",
     };
   },
 
   methods: {
     async login() {
+      console.log(api);
       try {
         const response = await axios.post("http://localhost:9000/auth/login", {
           username: this.username,
@@ -54,11 +56,17 @@ export default {
         sessionStorage.setItem("user", response.data.username);
         sessionStorage.setItem("token", response.data.accessToken);
         this.$store.dispatch("user", response.data);
+
         if (response.status === 200) {
           await this.$router.push("/");
+        } else if (response.status === 401) {
+          this.error =
+            "Could not verify user! Please make sure the password and username are correct.";
         }
-      } catch (error) {
-        alert(error);
+      } catch {
+        alert(
+          "A server error has occured. The devs are looking into it right now!"
+        );
       }
     },
   },
