@@ -15,7 +15,7 @@
       <router-link to="/mybooks" class="menu">My Books</router-link>
       <router-link to="/" class="menu">All Books</router-link>
 
-      <div class="out-button" @click="logout">Logout</div>
+      <div class="out-button menu" @click="logout">Logout</div>
     </div>
   </nav>
 </template>
@@ -45,7 +45,6 @@ nav {
 }
 
 .logged-in {
-  background: #d7acd4;
   display: flex;
   flex-direction: row;
   justify-content: end;
@@ -65,7 +64,7 @@ nav {
 }
 
 .not-logged-in {
-  background: pink;
+  margin-top: 10px;
   padding-top: 10px;
   display: flex;
   justify-content: end;
@@ -94,6 +93,10 @@ nav {
 .menu {
   text-decoration: none;
   color: black;
+  padding: 10px 20px;
+  background: plum;
+  border: 1px solid #885df1;
+  border-radius: 25px;
 }
 
 .navi {
