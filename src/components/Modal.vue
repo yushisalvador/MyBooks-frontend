@@ -45,7 +45,7 @@
 import ButtonComponent from "./ButtonComponent.vue";
 import { mapGetters } from "vuex";
 import axios from "axios";
-const api = process.env.VUE_APP_API_URL;
+const api = "https://little-world-of-books.herokuapp.com";
 
 export default {
   name: "ModalComponent",
