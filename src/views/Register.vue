@@ -28,8 +28,10 @@
 
 <script>
 import { useRouter } from "vue-router";
-
 import axios from "axios";
+
+const api = process.env.VUE_APP_API_URL;
+
 export default {
   name: "RegistrationPage",
   data() {
@@ -45,7 +47,7 @@ export default {
       }
       const router = useRouter();
       try {
-        const req = await axios.post("http://localhost:9000/auth/register", {
+        const req = await axios.post(`${api}/auth/register`, {
           username: this.username,
           pass: this.password,
         });

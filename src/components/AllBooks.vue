@@ -44,6 +44,7 @@ import axios from "axios";
 import Modal from "./Modal.vue";
 import { mapGetters } from "vuex";
 import EditForm from "./EditForm.vue";
+const api = process.env.VUE_APP_API_URL;
 
 export default {
   name: "AllBooks",
@@ -63,7 +64,7 @@ export default {
     async deleteBook(id) {
       try {
         if (confirm("Are you sure?")) {
-          await axios.delete(`http://localhost:9000/books?id=${id}`);
+          await axios.delete(`${api}/books?id=${id}`);
           alert("Done!");
         }
       } catch (error) {
