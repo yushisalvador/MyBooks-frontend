@@ -97,7 +97,7 @@ export default {
 }
 
 .delete {
-  margin-left: 10px;
+  margin-left: 8px;
 }
 button {
   margin: 8px;
@@ -109,7 +109,7 @@ th,
 td {
   border: 1px solid;
   padding: 10px;
-  width: 60vw;
+  width: 70vw;
 }
 
 table {
