@@ -1,34 +1,41 @@
 <template>
   <Modal header="Add a book!" />
-  <div class="container">
-    <table v-if="myBooks.length > 0">
-      <tr>
-        <th>Author</th>
-        <th>Title</th>
-        <th>Registered By</th>
-        <th>Date Finished</th>
-        <th>Options</th>
-      </tr>
+  <table v-if="myBooks.length > 0">
+    <tr>
+      <th>Author</th>
+      <th>Title</th>
+      <th>Registered By</th>
+      <th>Date Finished</th>
+      <th>Options</th>
+    </tr>
 
-      <tr :key="book.id" v-for="book in myBooks">
-        <td>
-          {{ book.author }}
-        </td>
-        <td>{{ book.title }}</td>
-        <td>{{ book.registered_by }}</td>
-        <td>{{ book.date_finished.toString().slice(0, 10) }}</td>
-        <td class="options">
-          <div class="edit-container">
-            <button @click="manageForm(book.id)">{{ text }}</button>
-            <div class="edit" v-if="showEditForm === true && index === book.id">
-              <EditForm :bookId="book.id" />
-            </div>
-            <button class="delete">Delete</button>
+    <tr :key="book.id" v-for="book in myBooks">
+      <td>
+        {{ book.author }}
+      </td>
+      <td>{{ book.title }}</td>
+      <td>{{ book.registered_by }}</td>
+      <td>
+        <div v-if="book.date_finished">
+          {{ book.date_finished.toString().slice(0, 10) }}
+        </div>
+        <div v-if="!book.date_finished">not specified</div>
+      </td>
+
+      <td v-if="user" class="options">
+        <div class="edit-container" v-if="this.user === book.registered_by">
+          <button class="edit-option" @click="manageForm(book.id)">
+            <div v-if="this.editId === book.id">Close</div>
+            <div v-if="this.editId !== book.id">Edit</div>
+          </button>
+          <div class="edit" v-if="this.editId === book.id">
+            <EditForm :bookId="book.id" />
           </div>
-        </td>
-      </tr>
-    </table>
-  </div>
+        </div>
+        <button @click="deleteBook(book.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
 </template>
 
 <script>
@@ -43,9 +50,7 @@ export default {
   data() {
     return {
       myBooks: [],
-      showEditForm: false,
-      index: null,
-      text: "Edit",
+      editId: null,
       date_finished: null,
     };
   },
@@ -63,12 +68,10 @@ export default {
       this.myBooks = books.data;
     },
     manageForm(id) {
-      this.showEditForm = !this.showEditForm;
-      this.index = id;
-      if (this.showEditForm === true) {
-        this.text = "Close";
+      if (id === this.editId) {
+        this.editId = null;
       } else {
-        this.text = "Edit";
+        this.editId = id;
       }
     },
   },
