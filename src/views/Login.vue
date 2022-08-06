@@ -1,31 +1,36 @@
 <template>
-  <div class="container">
-    <div class="sub">
-      <div>Welcome to Little World Of Books!!</div>
-      <form @submit.prevent="login">
-        <label>Username</label>
-        <input
-          v-model="username"
-          type="username"
-          placeholder="username"
-          required
-        />
+  <div class="page-container">
+    <div class="container">
+      <div class="sub-container">
+        <img :src="bookSVG" class="shelves" />
 
-        <label>Password</label>
-        <input
-          v-model="password"
-          type="password"
-          placeholder="password"
-          required
-        />
+        <div>Welcome back!</div>
+        <p>Login to your Little World Of Books account.</p>
+        <form @submit.prevent="login">
+          <label>Username</label>
+          <input
+            v-model="username"
+            type="username"
+            placeholder="username"
+            required
+          />
 
-        <button type="submit">Login</button>
-      </form>
+          <label>Password</label>
+          <input
+            v-model="password"
+            type="password"
+            placeholder="password"
+            required
+          />
 
-      <div>
+          <button type="submit">Login</button>
+        </form>
+
         <div>
-          Don't have an account?
-          <span> <router-link to="/register">Sign up now!</router-link></span>
+          <div>
+            Don't have an account?
+            <span> <router-link to="/register">Sign up now!</router-link></span>
+          </div>
         </div>
       </div>
     </div>
@@ -43,6 +48,7 @@ export default {
       username: "",
       password: "",
       error: "",
+      bookSVG: require(".././assets/shelves.svg"),
     };
   },
 
@@ -74,20 +80,29 @@ export default {
 </script>
 
 <style scoped>
+.page-container {
+  height: 100vh;
+}
 .container {
   margin: 0 auto;
-  height: 90vh;
-  width: 50vw;
-  border: 2px solid black;
+  margin-top: 30px;
+  height: 60vh;
+  width: 20vw;
+  border: 1px solid rgb(214, 197, 215);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+  background: rgb(227, 212, 232);
+}
+.shelves {
+  width: 150px;
+  height: 140px;
+}
+.sub-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-}
-
-.sub {
-  position: relative;
-  top: 25%;
 }
 form {
   display: flex;
