@@ -1,10 +1,18 @@
 <template>
-  <nav class="not-logged-in">
-    <div class="not-logged-in-nav" v-for="option in navLinks" :key="option.id">
-      <router-link :to="`${option.link}`" class="menu all">{{
-        option.name
-      }}</router-link>
-    </div>
+  <nav class="navbar">
+    <!-- Always shown -->
+    <router-link to="/" class="menu option">All books</router-link>
+    <!-- Shown if logged out -->
+    <router-link v-if="!user" to="/login" class="menu option">
+      Login
+    </router-link>
+    <router-link v-if="!user" to="/register" class="menu option">
+      Register
+    </router-link>
+    <!-- Shown if logged in -->
+    <router-link v-if="user" to="/mybooks" class="menu option">
+      My books
+    </router-link>
     <div v-if="user" class="out-button menu" @click="logout">Logout</div>
   </nav>
 </template>
@@ -14,37 +22,6 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "NavBar",
-
-  data() {
-    return {
-      notAuthenticatedNav: [
-        {
-          id: 1,
-          name: "All Books",
-          link: "/",
-        },
-        {
-          id: 2,
-          name: "Login",
-          link: "/login",
-        },
-        { id: 3, name: "Register", link: "/register" },
-      ],
-      authenticatedNav: [
-        {
-          id: 1,
-          name: "All Books",
-          link: "/",
-        },
-        {
-          id: 2,
-          name: "My books",
-          link: "/mybooks",
-        },
-      ],
-      navLinks: null,
-    };
-  },
   methods: {
     logout() {
       this.$store.dispatch("user", null);
@@ -56,13 +33,6 @@ export default {
   computed: {
     ...mapGetters(["user"]),
   },
-  created() {
-    if (!this.user) {
-      this.navLinks = this.notAuthenticatedNav;
-    } else {
-      this.navLinks = this.authenticatedNav;
-    }
-  },
 };
 </script>
 
@@ -71,50 +41,12 @@ nav {
   margin-bottom: 20px;
 }
 
-.logged-in {
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  padding-bottom: 10px;
-  padding-top: 15px;
-}
-
-.out-button {
-  margin-right: 30px;
-}
-.out-button:hover {
-  color: white;
-  cursor: pointer;
-}
-.all {
-  margin-right: 10px;
-}
-
-.not-logged-in {
+.navbar {
   margin-top: 10px;
   padding-top: 10px;
   display: flex;
-  justify-content: end;
-}
-
-.not-logged-in-nav {
-  display: flex;
-  flex-direction: row;
   gap: 20px;
-}
-
-.signup {
-  margin-right: 10px;
-}
-
-.option {
-  padding-bottom: 5px;
-  font-size: 20px;
-}
-
-.menu:hover {
-  cursor: pointer;
-  color: white;
+  justify-content: end;
 }
 
 .menu {
@@ -124,16 +56,25 @@ nav {
   background: #c4c1e0;
   border: 1px solid #885df1;
   border-radius: 25px;
+  padding-bottom: 5px;
+  font-size: 20px;
 }
-
-.navi {
-  display: flex;
-  gap: 30px;
+.menu:hover {
+  cursor: pointer;
+  color: white;
 }
 
 .active {
   background: rgb(225, 225, 234);
   color: rgb(112, 3, 112);
   border: 2px solid rgb(112, 3, 112);
+}
+
+.out-button {
+  margin-right: 30px;
+}
+.out-button:hover {
+  color: white;
+  cursor: pointer;
 }
 </style>
