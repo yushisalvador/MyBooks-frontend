@@ -84,7 +84,6 @@ export default {
 
 .name-app {
   font-size: 50px;
-  margin: 25px;
 }
 
 .intro-texts {
@@ -115,6 +114,8 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 form {
   width: 50%;

@@ -99,7 +99,6 @@ export default {
   width: 40%;
   border: 1px solid rgb(214, 197, 215);
   display: flex;
-  flex-direction: row;
   justify-content: center;
   padding: 10px;
   background: #fafafa;
@@ -112,6 +111,7 @@ export default {
 .sub-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
