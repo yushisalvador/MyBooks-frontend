@@ -86,6 +86,40 @@ export default {
 </script>
 
 <style scoped>
+button {
+  margin: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+td {
+  border: 2px solid #b29ae3;
+  padding: 10px;
+}
+
+table {
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 60%;
+  border: 2px solid #b29ae3;
+  padding: 10px;
+}
+
+th {
+  border: 2px solid #b29ae3;
+  padding: 10px;
+  background: whitesmoke;
+}
+
+th:hover {
+  color: #b29ae3;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .edit-container {
   position: relative;
 }
@@ -101,28 +135,5 @@ export default {
 
 .delete {
   margin-left: 8px;
-}
-button {
-  margin: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-table,
-th,
-td {
-  border: 1px solid;
-  padding: 10px;
-  width: 70vw;
-}
-
-table {
-  margin: 0 auto;
-  margin-top: 30px;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 </style>

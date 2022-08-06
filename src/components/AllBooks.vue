@@ -110,6 +110,10 @@ th:hover {
   color: #b29ae3;
 }
 
+button {
+  margin: 2px;
+}
+
 .container {
   height: 100vh;
 }
@@ -120,6 +124,7 @@ th:hover {
 .edit-container {
   position: relative;
 }
+
 .edit {
   background: white;
   border: solid 1px rgb(241, 173, 241);
