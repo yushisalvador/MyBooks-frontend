@@ -22,11 +22,18 @@ export default {
   },
   methods: {
     async editDate(id) {
-      const res = await axios.put(`${api}/books?id=${id}`, {
-        date_finished: this.date_finished,
-      });
-      if (res.status === 200) {
+      try {
+        await axios.put(`${api}/books?id=${id}`, {
+          date_finished: this.date_finished,
+        });
         alert("successfully edited!");
+      } catch (error) {
+        const status = error.response.status;
+        if (status === 404) {
+          alert("Please put something!");
+        } else {
+          alert("Uh-oh, something went wrong!");
+        }
       }
     },
   },
