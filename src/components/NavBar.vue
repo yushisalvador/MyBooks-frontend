@@ -47,9 +47,9 @@ export default {
   },
   methods: {
     logout() {
+      this.$store.dispatch("user", null);
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("user");
-      this.$store.dispatch("user", null);
       this.$router.push("/login");
     },
   },
@@ -129,5 +129,11 @@ nav {
 .navi {
   display: flex;
   gap: 30px;
+}
+
+.active {
+  background: rgb(225, 225, 234);
+  color: rgb(112, 3, 112);
+  border: 2px solid rgb(112, 3, 112);
 }
 </style>
