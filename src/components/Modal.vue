@@ -17,15 +17,16 @@
     <transition name="slide" appear>
       <div class="modal" v-if="showModal">
         <h3>{{ header }}</h3>
+        <p class="error">{{ error }}</p>
         <form>
           <label>Title</label>
           <div>
-            <input type="text" class="text" v-model="title" />
+            <input type="text" class="text" v-model="title" required />
           </div>
 
           <label>Author</label>
           <div>
-            <input type="text" class="text" v-model="author" />
+            <input type="text" class="text" v-model="author" required />
           </div>
           <label>Date finished</label>
           <div>
@@ -56,6 +57,7 @@ export default {
       title: null,
       date_finished: null,
       registered_by: null,
+      error: "",
     };
   },
   props: {
@@ -64,17 +66,24 @@ export default {
   components: { ButtonComponent },
   methods: {
     async addNewBook() {
-      const postObj = {
-        author: this.author,
-        title: this.title,
-        date_finished: this.date_finished,
-        registered_by: this.user,
-      };
-      const res = await axios.post(`${api}/books`, postObj);
-      if (res.status === 200) {
-        this.showModal = false;
-      } else {
-        alert("Something went wrong!");
+      try {
+        if (!this.author || !this.title) {
+          this.error = "Author and Title are required!";
+        } else {
+          const postObj = {
+            author: this.author,
+            title: this.title,
+            date_finished: this.date_finished,
+            registered_by: this.user,
+          };
+          await axios.post(`${api}/books`, postObj);
+
+          this.showModal = false;
+        }
+      } catch {
+        alert(
+          "Uh-oh! Something went wrong. Our devs are looking into it right now!"
+        );
       }
     },
   },
@@ -166,5 +175,9 @@ input.date {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.error {
+  text-align: center;
 }
 </style>
