@@ -1,22 +1,11 @@
 <template>
-  <nav v-if="!user" class="not-logged-in">
-    <div class="not-logged-in-nav">
-      <div class="login option">
-        <router-link to="/" class="menu all">All Books</router-link>
-        <router-link to="/login" class="menu"> Login</router-link>
-      </div>
-      <div class="signup option">
-        <router-link to="/register" class="menu"> Signup</router-link>
-      </div>
+  <nav class="not-logged-in">
+    <div class="not-logged-in-nav" v-for="option in navLinks" :key="option.id">
+      <router-link :to="`${option.link}`" class="menu all">{{
+        option.name
+      }}</router-link>
     </div>
-  </nav>
-  <nav v-if="user" class="logged-in">
-    <div class="navi">
-      <router-link to="/mybooks" class="menu">My Books</router-link>
-      <router-link to="/" class="menu">All Books</router-link>
-
-      <div class="out-button menu" @click="logout">Logout</div>
-    </div>
+    <div v-if="user" class="out-button menu" @click="logout">Logout</div>
   </nav>
 </template>
 
@@ -25,6 +14,37 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "NavBar",
+
+  data() {
+    return {
+      notAuthenticatedNav: [
+        {
+          id: 1,
+          name: "All Books",
+          link: "/",
+        },
+        {
+          id: 2,
+          name: "Login",
+          link: "/login",
+        },
+        { id: 3, name: "Register", link: "/register" },
+      ],
+      authenticatedNav: [
+        {
+          id: 1,
+          name: "All Books",
+          link: "/",
+        },
+        {
+          id: 2,
+          name: "My books",
+          link: "/mybooks",
+        },
+      ],
+      navLinks: null,
+    };
+  },
   methods: {
     logout() {
       sessionStorage.removeItem("token");
@@ -35,6 +55,13 @@ export default {
   },
   computed: {
     ...mapGetters(["user"]),
+  },
+  created() {
+    if (!this.user) {
+      this.navLinks = this.notAuthenticatedNav;
+    } else {
+      this.navLinks = this.authenticatedNav;
+    }
   },
 };
 </script>
