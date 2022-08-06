@@ -94,7 +94,7 @@ nav {
   text-decoration: none;
   color: black;
   padding: 10px 20px;
-  background: plum;
+  background: #c4c1e0;
   border: 1px solid #885df1;
   border-radius: 25px;
 }
