@@ -8,7 +8,7 @@
 import AllBooks from "../components/AllBooks.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
-const api = process.env.VUE_APP_API_URL;
+
 export default {
   name: "HomePage",
   components: { AllBooks },
@@ -21,7 +21,7 @@ export default {
 
   methods: {
     async fetchBooks() {
-      let books = await axios.get(`${api}/books`);
+      let books = await axios.get("books");
       this.allBooks = books.data;
     },
   },
@@ -30,6 +30,7 @@ export default {
   },
   created() {
     this.fetchBooks();
+    console.log(this.token);
   },
 };
 </script>

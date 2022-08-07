@@ -1,8 +1,7 @@
 import { createStore } from "vuex";
 
 const state = {
-  user: sessionStorage.getItem("user") || null,
-  token: sessionStorage.getItem("token") || null,
+  user: null || JSON.parse(sessionStorage.getItem("user")),
 };
 
 const store = createStore({
@@ -13,7 +12,7 @@ const store = createStore({
     },
   },
   actions: {
-    user(context, user) {
+    SET_USER(context, user) {
       context.commit("user", user);
     },
   },

@@ -43,7 +43,6 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import Modal from "../components/Modal.vue";
 import EditForm from "@/components/EditForm.vue";
-const api = process.env.VUE_APP_API_URL;
 
 export default {
   name: "MyBooks",
@@ -56,14 +55,10 @@ export default {
   },
   methods: {
     async getMyBooks() {
-      const token = sessionStorage.getItem("token");
+      console.log("calling getMyBooks with token: ", this.user.accessToken);
       let books = await axios.get(
-        `${api}/books/mybooks?username=${this.user}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+        `books/mybooks?username=${this.user.username}`,
+        {}
       );
       this.myBooks = books.data;
     },

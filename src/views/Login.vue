@@ -39,7 +39,6 @@
 
 <script>
 import axios from "axios";
-const api = process.env.VUE_APP_API_URL;
 
 export default {
   name: "LoginPage",
@@ -55,13 +54,17 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await axios.post(`${api}/auth/login`, {
+        const response = await axios.post("auth/login", {
           username: this.username,
           pass: this.password,
         });
-        this.$store.dispatch("user", response.data);
-        sessionStorage.setItem("user", response.data.username);
-        sessionStorage.setItem("token", response.data.accessToken);
+        const userData = response.data;
+        this.$store.dispatch("SET_USER", userData);
+        sessionStorage.setItem("user", JSON.stringify(userData));
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${userData.accessToken}`;
+
         await this.$router.push("/");
       } catch (error) {
         const status = error.response.status;

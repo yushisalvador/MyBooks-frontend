@@ -46,7 +46,6 @@
 import ButtonComponent from "./ButtonComponent.vue";
 import { mapGetters } from "vuex";
 import axios from "axios";
-const api = process.env.VUE_APP_API_URL;
 
 export default {
   name: "ModalComponent",
@@ -74,9 +73,9 @@ export default {
             author: this.author,
             title: this.title,
             date_finished: this.date_finished,
-            registered_by: this.user,
+            registered_by: this.user.username,
           };
-          await axios.post(`${api}/books`, postObj);
+          await axios.post("books", postObj);
 
           this.showModal = false;
         }
