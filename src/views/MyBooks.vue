@@ -23,7 +23,10 @@
       </td>
 
       <td v-if="user" class="options">
-        <div class="edit-container" v-if="this.user === book.registered_by">
+        <div
+          class="edit-container"
+          v-if="this.user.username === book.registered_by"
+        >
           <button class="edit-option" @click="manageForm(book.id)">
             <div v-if="this.editId === book.id">Close</div>
             <div v-if="this.editId !== book.id">Edit</div>

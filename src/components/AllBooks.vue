@@ -26,7 +26,10 @@
           <div v-if="!book.date_finished">not specified</div>
         </td>
         <td v-if="user" class="options">
-          <div class="edit-container" v-if="this.user === book.registered_by">
+          <div
+            class="edit-container"
+            v-if="this.user.username === book.registered_by"
+          >
             <button class="edit-option" @click="manageForm(book.id)">
               <div v-if="this.editId === book.id">Close</div>
               <div v-if="this.editId !== book.id">Edit</div>
@@ -34,8 +37,8 @@
             <div class="edit" v-if="this.editId === book.id">
               <EditForm :bookId="book.id" />
             </div>
+            <button @click="deleteBook(book.id)">Delete</button>
           </div>
-          <button @click="deleteBook(book.id)">Delete</button>
         </td>
       </tr>
     </table>
