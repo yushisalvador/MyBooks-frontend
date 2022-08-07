@@ -36,8 +36,6 @@
 <script>
 import axios from "axios";
 
-const api = process.env.VUE_APP_API_URL;
-
 export default {
   name: "RegistrationPage",
   data() {
@@ -53,7 +51,7 @@ export default {
         alert("username & password must contain at least 6 characters!");
       }
       try {
-        await axios.post(`${api}/auth/register`, {
+        await axios.post("auth/register", {
           username: this.username,
           pass: this.password,
         });

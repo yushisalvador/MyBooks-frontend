@@ -8,7 +8,6 @@
 
 <script>
 import axios from "axios";
-const api = process.env.VUE_APP_API_URL;
 
 export default {
   name: "EditForm",
@@ -23,7 +22,7 @@ export default {
   methods: {
     async editDate(id) {
       try {
-        await axios.put(`${api}/books?id=${id}`, {
+        await axios.put(`books?id=${id}`, {
           date_finished: this.date_finished,
         });
         alert("successfully edited!");

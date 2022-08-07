@@ -24,7 +24,7 @@ export default {
   name: "NavBar",
   methods: {
     logout() {
-      this.$store.dispatch("user", null);
+      this.$store.dispatch("SET_USER", null);
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("user");
       this.$router.push("/login");
