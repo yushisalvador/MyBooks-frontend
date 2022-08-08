@@ -6,7 +6,6 @@
 
         <div class="welcome">Welcome back!</div>
         <p class="login-text">Login to your account.</p>
-        <p class="error">{{ error }}</p>
 
         <form @submit.prevent="login">
           <label>Username</label>
@@ -58,26 +57,17 @@ export default {
           username: this.username,
           pass: this.password,
         });
-        const userData = response.data;
-        this.$store.dispatch("SET_USER", userData);
-        sessionStorage.setItem("user", JSON.stringify(userData));
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${userData.accessToken}`;
-
-        await this.$router.push("/");
-      } catch (error) {
-        const status = error.response.status;
-        if (status === 401) {
-          this.error =
-            "Could not verify user! Please make sure the password and username are correct.";
-        } else if (status === 404) {
-          this.error = `Could not find user with the username '${this.username}'`;
-        } else {
-          alert(
-            "A server error has occured. The devs are looking into it right now."
-          );
+        if (response) {
+          const userData = await response.data;
+          await this.$store.dispatch("SET_USER", userData);
+          sessionStorage.setItem("user", JSON.stringify(userData));
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${userData.accessToken}`;
+          await this.$router.push("/");
         }
+      } catch (error) {
+        console.log(error);
       }
     },
   },
@@ -89,12 +79,6 @@ export default {
   height: 100vh;
 }
 
-.error {
-  font-size: 16px;
-  text-align: center;
-  font-weight: 400;
-  width: 50%;
-}
 .container {
   margin: 0 auto;
   margin-top: 30px;

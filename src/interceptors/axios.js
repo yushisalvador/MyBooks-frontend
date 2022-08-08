@@ -25,7 +25,15 @@ axios.interceptors.response.use(
 
         return axios.request(error.config);
       }
+
+      if (status === 403) {
+        this.$router.push("/login");
+      }
+    } else {
+      alert(error.response.data);
+      return error;
     }
+
     refresh = false;
     return error;
   }

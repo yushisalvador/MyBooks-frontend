@@ -58,16 +58,7 @@ export default {
         alert("succesfully signed up! Redirecting you to our login screen!");
         await this.$router.push("/login");
       } catch (error) {
-        const status = error.response.status;
         console.log(error);
-        if (status === 409) {
-          this.error =
-            "A user with this username already exists. Please choose a different username.";
-        } else if (status === 401) {
-          this.error = "Username and password are required!";
-        } else {
-          alert("Failed to sign up. This is likely due to a server error.");
-        }
       }
     },
   },
