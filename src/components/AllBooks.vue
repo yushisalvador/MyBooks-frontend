@@ -114,8 +114,18 @@ th:hover {
 
 button {
   margin: 2px;
+  padding: 4px;
+  background: #cdbeea;
+  border-radius: 4px;
+  border: 2px solid white;
 }
 
+button:hover {
+  background: #c1a0ef;
+  cursor: pointer;
+  border: 2px solid rgb(234, 198, 222);
+  color: white;
+}
 .container {
   height: 100vh;
 }
