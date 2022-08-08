@@ -21,8 +21,8 @@ export default {
 
 <style scoped>
 .btn {
-  border: 1px black solid;
-  background: linear-gradient(32.95deg, #786e86 8.75%, #dba6e5 86.64%);
+  border: 2px solid white;
+  background: #cdbedd;
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 15px;
@@ -32,8 +32,8 @@ export default {
 }
 
 .btn:hover {
-  background: linear-gradient(32.95deg, #e0dde5 8.75%, #a56cb0 86.64%);
-  border: 1px solid purple;
+  background: #c1a0ef;
+  border: 2px solid rgb(234, 198, 222);
   cursor: pointer;
   color: white;
 }
