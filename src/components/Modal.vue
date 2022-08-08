@@ -17,7 +17,7 @@
     <transition name="slide" appear>
       <div class="modal" v-if="showModal">
         <h3>{{ header }}</h3>
-        <p class="error">{{ error }}</p>
+        <p v-if="error" class="error">{{ error }}</p>
         <form>
           <label>Title</label>
           <div>
@@ -56,7 +56,7 @@ export default {
       title: null,
       date_finished: null,
       registered_by: null,
-      error: "",
+      error: null,
     };
   },
   props: {
@@ -79,7 +79,10 @@ export default {
 
           this.showModal = false;
         }
-      } catch {
+      } catch (error) {
+        if (error.response.status === 403) {
+          this.error = "You are not authorized. Please log in again";
+        }
         alert(
           "Uh-oh! Something went wrong. Our devs are looking into it right now!"
         );
@@ -178,5 +181,8 @@ input.date {
 
 .error {
   text-align: center;
+  background: rgb(231, 174, 174);
+  padding: 5px;
+  border-radius: 8px;
 }
 </style>
