@@ -9,11 +9,11 @@ axios.interceptors.response.use(
   (response) => {
     return response;
   },
-  async (error) => {
+  (error) => {
     if (error.response.status === 403 && !refresh) {
       refresh = true;
 
-      const { status, data } = await axios.post("auth/token", {
+      const { status, data } = axios.post("auth/token", {
         username: store.getters.user.username,
         refreshToken: store.getters.user.refreshToken,
       });
@@ -24,17 +24,14 @@ axios.interceptors.response.use(
         ] = `Bearer ${data.accessToken}`;
 
         return axios.request(error.config);
-      }
-
-      if (status === 403) {
+      } else if (status === 403) {
+        axios.delete(`auth/logout?id=${store.getters.user.id}`);
+        sessionStorage.clear();
         this.$router.push("/login");
       }
-    } else {
-      alert(error.response.data);
-      return error;
     }
 
     refresh = false;
-    return error;
+    return Promise.reject(error);
   }
 );

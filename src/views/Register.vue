@@ -6,7 +6,7 @@
           <div class="name-app">LIBRARY</div>
           <div>Join Library and track your books!</div>
           <sub>It takes less than a minute to create an account. </sub>
-          <p class="errror">{{ error }}</p>
+          <p v-if="error" class="error">{{ error }}</p>
         </div>
 
         <form @submit.prevent="register">
@@ -42,7 +42,7 @@ export default {
     return {
       username: "",
       password: "",
-      error: "",
+      error: null,
     };
   },
   methods: {
@@ -58,7 +58,16 @@ export default {
         alert("succesfully signed up! Redirecting you to our login screen!");
         await this.$router.push("/login");
       } catch (error) {
+        const status = error.response.status;
         console.log(error);
+        if (status === 409) {
+          this.error =
+            "A user with this username already exists. Please choose a different username.";
+        } else if (status === 401) {
+          this.error = "Username and password are required!";
+        } else {
+          alert("Failed to sign up. This is likely due to a server error.");
+        }
       }
     },
   },
@@ -105,6 +114,18 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.error {
+  margin: 0 auto;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 400;
+  width: 80%;
+  background: rgb(231, 174, 174);
+  padding: 5px;
+  border-radius: 8px;
+  margin-top: 10px;
 }
 form {
   width: 50%;

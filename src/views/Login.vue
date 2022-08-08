@@ -6,6 +6,7 @@
 
         <div class="welcome">Welcome back!</div>
         <p class="login-text">Login to your account.</p>
+        <p v-if="error" class="error">{{ error }}</p>
 
         <form @submit.prevent="login">
           <label>Username</label>
@@ -38,18 +39,16 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: "LoginPage",
   data() {
     return {
       username: "",
       password: "",
-      error: "",
+      error: null,
       bookSVG: require(".././assets/shelves.svg"),
     };
   },
-
   methods: {
     async login() {
       try {
@@ -57,23 +56,30 @@ export default {
           username: this.username,
           pass: this.password,
         });
-        if (response) {
-          const userData = await response.data;
-          await this.$store.dispatch("SET_USER", userData);
-          sessionStorage.setItem("user", JSON.stringify(userData));
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${userData.accessToken}`;
-          await this.$router.push("/");
-        }
+        const userData = response.data;
+        this.$store.dispatch("SET_USER", userData);
+        sessionStorage.setItem("user", JSON.stringify(userData));
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${userData.accessToken}`;
+        await this.$router.push("/");
       } catch (error) {
-        console.log(error);
+        const status = error.response.status;
+        if (status === 401) {
+          this.error =
+            "Could not verify user! Please make sure the password and username are correct.";
+        } else if (status === 404) {
+          this.error = `Could not find user with the username '${this.username}'`;
+        } else {
+          alert(
+            "A server error has occured. The devs are looking into it right now."
+          );
+        }
       }
     },
   },
 };
 </script>
-
 <style scoped>
 .page-container {
   height: 100vh;
@@ -91,6 +97,17 @@ export default {
   background: #fafafa;
   box-shadow: 6px 6px grey;
 }
+
+.error {
+  font-size: 16px;
+  text-align: center;
+  font-weight: 400;
+  width: 60%;
+  background: rgb(231, 174, 174);
+  padding: 5px;
+  border-radius: 8px;
+}
+
 .shelves {
   width: 150px;
   height: 140px;
