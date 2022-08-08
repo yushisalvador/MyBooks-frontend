@@ -166,4 +166,12 @@ button:hover {
 input {
   margin-bottom: 10px;
 }
+
+@media only screen and (max-width: 900px) {
+  .container {
+    width: 85%;
+    height: 86%;
+    margin-top: 40px;
+  }
+}
 </style>

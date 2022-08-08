@@ -5,7 +5,9 @@
         <div class="intro-texts">
           <div class="name-app">LIBRARY</div>
           <div>Join Library and track your books!</div>
-          <sub>It takes less than a minute to create an account. </sub>
+          <p class="sub-header">
+            It takes less than a minute to create an account.
+          </p>
           <p v-if="error" class="error">{{ error }}</p>
         </div>
 
