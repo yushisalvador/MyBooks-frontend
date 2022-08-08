@@ -5,8 +5,10 @@
         <div class="intro-texts">
           <div class="name-app">LIBRARY</div>
           <div>Join Library and track your books!</div>
-          <sub>It takes less than a minute to create an account. </sub>
-          <p class="errror">{{ error }}</p>
+          <p class="sub-header">
+            It takes less than a minute to create an account.
+          </p>
+          <p v-if="error" class="error">{{ error }}</p>
         </div>
 
         <form @submit.prevent="register">
@@ -42,7 +44,7 @@ export default {
     return {
       username: "",
       password: "",
-      error: "",
+      error: null,
     };
   },
   methods: {
@@ -114,6 +116,18 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.error {
+  margin: 0 auto;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 400;
+  width: 80%;
+  background: rgb(231, 174, 174);
+  padding: 5px;
+  border-radius: 8px;
+  margin-top: 10px;
 }
 form {
   width: 50%;

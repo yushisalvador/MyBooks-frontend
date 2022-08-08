@@ -6,7 +6,7 @@
 
         <div class="welcome">Welcome back!</div>
         <p class="login-text">Login to your account.</p>
-        <p class="error">{{ error }}</p>
+        <p v-if="error" class="error">{{ error }}</p>
 
         <form @submit.prevent="login">
           <label>Username</label>
@@ -39,18 +39,16 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: "LoginPage",
   data() {
     return {
       username: "",
       password: "",
-      error: "",
+      error: null,
       bookSVG: require(".././assets/shelves.svg"),
     };
   },
-
   methods: {
     async login() {
       try {
@@ -64,7 +62,6 @@ export default {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${userData.accessToken}`;
-
         await this.$router.push("/");
       } catch (error) {
         const status = error.response.status;
@@ -83,18 +80,11 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .page-container {
   height: 100vh;
 }
 
-.error {
-  font-size: 16px;
-  text-align: center;
-  font-weight: 400;
-  width: 50%;
-}
 .container {
   margin: 0 auto;
   margin-top: 30px;
@@ -107,6 +97,17 @@ export default {
   background: #fafafa;
   box-shadow: 6px 6px grey;
 }
+
+.error {
+  font-size: 16px;
+  text-align: center;
+  font-weight: 400;
+  width: 60%;
+  background: rgb(231, 174, 174);
+  padding: 5px;
+  border-radius: 8px;
+}
+
 .shelves {
   width: 150px;
   height: 140px;
@@ -164,5 +165,13 @@ button:hover {
 
 input {
   margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 900px) {
+  .container {
+    width: 85%;
+    height: 86%;
+    margin-top: 40px;
+  }
 }
 </style>

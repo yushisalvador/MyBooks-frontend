@@ -1,5 +1,8 @@
 <template>
   <Modal header="Add a book!" />
+  <div v-if="myBooks.length === 0" class="no-books">
+    You dont have any books yet! Add some now.
+  </div>
   <table v-if="myBooks.length > 0">
     <tr>
       <th>Author</th>
@@ -58,7 +61,6 @@ export default {
   },
   methods: {
     async getMyBooks() {
-      console.log("calling getMyBooks with token: ", this.user.accessToken);
       let books = await axios.get(
         `books/mybooks?username=${this.user.username}`,
         {}
@@ -70,6 +72,17 @@ export default {
         this.editId = null;
       } else {
         this.editId = id;
+      }
+    },
+    async deleteBook(id) {
+      try {
+        if (confirm("Are you sure?")) {
+          await axios.delete(`books?id=${id}`);
+          alert("Done!");
+        }
+        await this.getMyBooks();
+      } catch (error) {
+        console.log(error);
       }
     },
   },
@@ -85,9 +98,18 @@ export default {
 
 <style scoped>
 button {
-  margin: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
+  margin: 2px;
+  padding: 4px;
+  background: #cdbeea;
+  border-radius: 4px;
+  border: 2px solid white;
+}
+
+button:hover {
+  background: #c1a0ef;
+  cursor: pointer;
+  border: 2px solid rgb(234, 198, 222);
+  color: white;
 }
 td {
   border: 2px solid #b29ae3;
@@ -133,5 +155,13 @@ th:hover {
 
 .delete {
   margin-left: 8px;
+}
+
+.no-books {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>

@@ -30,7 +30,6 @@ export default {
   },
   created() {
     this.fetchBooks();
-    console.log(this.token);
   },
 };
 </script>
