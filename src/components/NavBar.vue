@@ -19,15 +19,17 @@
 
 <script>
 import { mapGetters } from "vuex";
+import axios from "axios";
 
 export default {
   name: "NavBar",
   methods: {
-    logout() {
-      this.$store.dispatch("SET_USER", null);
+    async logout() {
+      await axios.delete(`auth/logout?id=${this.user.id}`);
+      await this.$store.dispatch("SET_USER", null);
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("user");
-      this.$router.push("/login");
+      await this.$router.push("/login");
     },
   },
   computed: {
