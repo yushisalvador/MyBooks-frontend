@@ -56,7 +56,7 @@ const store = createStore({
 
     async LOGOUT_USER({ commit }) {
       try {
-        await axios.delete(`auth/logout?id=${state.user.id}`);
+        await axios.delete(`auth/logout/${state.user.id}`);
         commit("logout");
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
@@ -69,7 +69,7 @@ const store = createStore({
     // BOOKS
     async GET_ALL_BOOKS({ commit }) {
       try {
-        let books = await axios.get("books");
+        let books = await axios.get("api/books");
         commit("setAllBooks", books);
       } catch (error) {
         commit("setErrorMessage", error);
@@ -78,7 +78,7 @@ const store = createStore({
 
     async GET_USER_BOOKS({ commit }, username) {
       try {
-        let myBooks = await axios.get(`books/mybooks?username=${username}`);
+        let myBooks = await axios.get(`api/books/mybooks?username=${username}`);
         commit("setUserBooks", myBooks);
       } catch (error) {
         if (error.response.status === 403) {
@@ -92,7 +92,7 @@ const store = createStore({
 
     async ADD_BOOK({ commit }, book) {
       try {
-        await axios.post("books", book);
+        await axios.post("api/books", book);
       } catch (error) {
         if (error.response.status === 403) {
           let message = "Your session expired. Please log in again.";
@@ -105,7 +105,7 @@ const store = createStore({
 
     async DELETE_BOOK({ commit }, deleteBook) {
       try {
-        await axios.delete(`books?id=${deleteBook}`);
+        await axios.delete(`api/books/${deleteBook}`);
         commit("removeBook", deleteBook);
       } catch (error) {
         if (error.response.status === 403) {
@@ -120,7 +120,7 @@ const store = createStore({
     async UPDATE_BOOK({ commit }, { id, payload }) {
       let message;
       try {
-        await axios.put(`books?id=${id}`, payload);
+        await axios.put(`api/books/${id}`, payload);
         this.GET_ALL_BOOKS({ commit: commit });
       } catch (error) {
         if (error.response.status === 404) {
