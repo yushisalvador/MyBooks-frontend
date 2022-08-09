@@ -91,6 +91,7 @@ export default {
   },
   created() {
     this.getMyBooks();
+    console.log(this.user.accessToken);
   },
   components: { Modal, EditForm },
 };

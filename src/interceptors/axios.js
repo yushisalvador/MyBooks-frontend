@@ -27,7 +27,6 @@ axios.interceptors.response.use(
 
       // if refreshing doesn't work
       if (!status) {
-        console.log("LOOG OUTTT");
         await axios.delete(`auth/logout?id=${store.getters.user.id}`);
         store.dispatch("SET_USER", null);
         sessionStorage.clear();
