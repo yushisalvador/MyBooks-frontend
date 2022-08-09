@@ -2,14 +2,14 @@
   <div class="page-wrapper">
     <div class="container">
       <div class="sub">
-        <div class="intro-texts">
+        <header class="intro-texts">
           <div class="name-app">LIBRARY</div>
           <div>Join Library and track your books!</div>
           <p class="sub-header">
             It takes less than a minute to create an account.
           </p>
           <p v-if="error" class="error">{{ error }}</p>
-        </div>
+        </header>
 
         <form @submit.prevent="register">
           <label>Username</label>

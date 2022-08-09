@@ -1,7 +1,7 @@
 <template>
   <div>
     <Modal header="Add a book!" />
-    <div v-if="myBooks.data.length === 0 && !error" class="no-books">
+    <div v-if="myBooks.length === 0 && !error" class="no-books">
       You dont have any books yet. Try adding some!
     </div>
 
@@ -9,7 +9,7 @@
       {{ error }}
     </div>
 
-    <table v-if="myBooks.data.length > 0">
+    <table v-if="myBooks.length > 0">
       <tr>
         <th>Author</th>
         <th>Title</th>
@@ -18,7 +18,7 @@
         <th>Options</th>
       </tr>
 
-      <tr :key="book.id" v-for="book in myBooks.data">
+      <tr :key="book.id" v-for="book in myBooks">
         <td>
           {{ book.author }}
         </td>
