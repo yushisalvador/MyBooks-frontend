@@ -2,12 +2,14 @@
   <form>
     <label>Date Finished</label>
     <input type="date" v-model="date_finished" />
-    <button @click.prevent="editDate(bookId)">Submit</button>
+    <ButtonComponent @btn-click="editDate(bookId)" text="Submit" />
+    <!-- <button @click.prevent="editDate(bookId)">Submit</button> -->
   </form>
 </template>
 
 <script>
 import axios from "axios";
+import ButtonComponent from "./ButtonComponent.vue";
 
 export default {
   name: "EditForm",
@@ -36,6 +38,7 @@ export default {
       }
     },
   },
+  components: { ButtonComponent },
 };
 </script>
 
