@@ -78,7 +78,7 @@ const store = createStore({
 
     async GET_USER_BOOKS({ commit }, username) {
       try {
-        let myBooks = await axios.get(`api/books/mybooks?username=${username}`);
+        let myBooks = await axios.get(`api/mybooks?username=${username}`);
         commit("setUserBooks", myBooks);
       } catch (error) {
         if (error.response.status === 403) {
@@ -93,6 +93,7 @@ const store = createStore({
     async ADD_BOOK({ commit }, book) {
       try {
         await axios.post("api/books", book);
+        commit("addBook", book);
       } catch (error) {
         if (error.response.status === 403) {
           let message = "Your session expired. Please log in again.";
@@ -150,6 +151,9 @@ const store = createStore({
     },
     setUserBooks(state, userBooks) {
       state.userBooks = userBooks;
+    },
+    addBook(state, book) {
+      state.books = state.books.push(book);
     },
     setErrorMessage(state, error) {
       state.error = error;
