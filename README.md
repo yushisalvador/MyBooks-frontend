@@ -52,4 +52,5 @@ password: password
 ## To-do
 * Write tests
 * Improve UI 
+* Automatic update
 
