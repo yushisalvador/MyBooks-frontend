@@ -3,6 +3,9 @@ import axios from "axios";
 import store from "../vuex";
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL;
+axios.defaults.headers.common[
+  "Authorization"
+] = `Bearer ${store.getters.user.accessToken}`;
 
 let refresh = false;
 
@@ -13,6 +16,7 @@ axios.interceptors.response.use(
   async (error) => {
     if (error.response.status === 403 && !refresh) {
       refresh = true;
+
       const { status, data } = await axios.post("auth/token", {
         username: store.getters.user.username,
         refreshToken: store.getters.user.refreshToken,
@@ -27,9 +31,7 @@ axios.interceptors.response.use(
 
       // if refreshing doesn't work
       if (!status) {
-        await axios.delete(`auth/logout?id=${store.getters.user.id}`);
-        store.dispatch("SET_USER", null);
-        sessionStorage.clear();
+        store.dispatch("LOGOUT_USER");
         router.replace("/login");
       }
     }
