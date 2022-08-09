@@ -17,7 +17,9 @@
     <transition name="slide" appear>
       <div class="modal" v-if="showModal">
         <h3>{{ header }}</h3>
+        <p v-if="formError" class="error">{{ formError }}</p>
         <p v-if="error" class="error">{{ error }}</p>
+
         <form>
           <label>Title</label>
           <div>
@@ -33,6 +35,7 @@
             <input type="date" class="date" v-model="date_finished" />
           </div>
         </form>
+
         <div class="button-container">
           <ButtonComponent @btn-click="addNewBook" text="Add" />
           <ButtonComponent @btn-click="showModal = false" text="Cancel" />
@@ -44,8 +47,6 @@
 
 <script>
 import ButtonComponent from "./ButtonComponent.vue";
-import { mapGetters } from "vuex";
-import axios from "axios";
 
 export default {
   name: "ModalComponent",
@@ -56,7 +57,7 @@ export default {
       title: null,
       date_finished: null,
       registered_by: null,
-      error: null,
+      formError: null,
     };
   },
   props: {
@@ -64,33 +65,27 @@ export default {
   },
   components: { ButtonComponent },
   methods: {
-    async addNewBook() {
-      try {
-        if (!this.author || !this.title) {
-          this.error = "Author and Title are required!";
-        } else {
-          const postObj = {
-            author: this.author,
-            title: this.title,
-            date_finished: this.date_finished,
-            registered_by: this.user.username,
-          };
-          await axios.post("books", postObj);
-
-          this.showModal = false;
-        }
-      } catch (error) {
-        if (error.response.status === 403) {
-          this.error = "You are not authorized. Please log in again";
-        }
-        alert(
-          "Uh-oh! Something went wrong. Our devs are looking into it right now!"
-        );
+    addNewBook() {
+      if (!this.author || !this.title) {
+        this.formError = "Author and Title are required!";
       }
+      const postObj = {
+        author: this.author,
+        title: this.title,
+        date_finished: this.date_finished,
+        registered_by: this.user.username,
+      };
+      this.$store.dispatch("ADD_BOOK", postObj);
+      this.showModal = false;
     },
   },
   computed: {
-    ...mapGetters(["user"]),
+    user() {
+      return this.$store.getters.user;
+    },
+    error() {
+      return this.$store.getters.errorMessage;
+    },
   },
 };
 </script>
@@ -101,7 +96,9 @@ form {
   flex-direction: column;
   align-items: center;
 }
-
+h2.error {
+  text-align: center;
+}
 h3 {
   text-align: center;
 }
@@ -124,6 +121,7 @@ input.date {
   border: black solid 0.8px;
   border-radius: 10px;
 }
+
 .buttonComponent {
   display: flex;
   flex-direction: row;

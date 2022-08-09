@@ -1,14 +1,13 @@
 <template>
+  <p v-if="errorMessage" class="error">{{ error }}</p>
   <form>
     <label>Date Finished</label>
     <input type="date" v-model="date_finished" />
     <ButtonComponent @btn-click="editDate(bookId)" text="Submit" />
-    <!-- <button @click.prevent="editDate(bookId)">Submit</button> -->
   </form>
 </template>
 
 <script>
-import axios from "axios";
 import ButtonComponent from "./ButtonComponent.vue";
 
 export default {
@@ -22,23 +21,21 @@ export default {
     bookId: Number,
   },
   methods: {
-    async editDate(id) {
-      try {
-        await axios.put(`books?id=${id}`, {
+    editDate(id) {
+      return this.$store.dispatch("UPDATE_BOOK", {
+        id: id,
+        payload: {
           date_finished: this.date_finished,
-        });
-        alert("successfully edited!");
-      } catch (error) {
-        const status = error.response.status;
-        if (status === 404) {
-          alert("Please put something!");
-        } else {
-          alert("Uh-oh, something went wrong!");
-        }
-      }
+        },
+      });
     },
   },
   components: { ButtonComponent },
+  computed: {
+    error() {
+      return this.$store.getters.errorMessage;
+    },
+  },
 };
 </script>
 
@@ -50,11 +47,10 @@ input {
   padding-right: 8px;
 }
 
-button {
-  margin-top: 10px;
-  padding-left: 8px;
-  padding-right: 8px;
-  background: rgb(244, 206, 244);
-  border: 1px white solid;
+.error {
+  text-align: center;
+  background: rgb(231, 174, 174);
+  padding: 5px;
+  border-radius: 8px;
 }
 </style>

@@ -3,9 +3,11 @@ import axios from "axios";
 import store from "../vuex";
 
 axios.defaults.baseURL = process.env.VUE_APP_API_URL;
-axios.defaults.headers.common[
-  "Authorization"
-] = `Bearer ${store.getters.user.accessToken}`;
+if (store.getters.user) {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${store.getters.user.accessToken}`;
+}
 
 let refresh = false;
 

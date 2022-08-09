@@ -38,48 +38,31 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "LoginPage",
   data() {
     return {
       username: "",
       password: "",
-      error: null,
       bookSVG: require(".././assets/shelves.svg"),
     };
   },
   methods: {
-    async login() {
-      try {
-        const response = await axios.post("auth/login", {
-          username: this.username,
-          pass: this.password,
-        });
-        const userData = response.data;
-        this.$store.dispatch("SET_USER", userData);
-        sessionStorage.setItem("user", JSON.stringify(userData));
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${userData.accessToken}`;
-        await this.$router.push("/");
-      } catch (error) {
-        const status = error.response.status;
-        if (status === 401) {
-          this.error =
-            "Could not verify user! Please make sure the password and username are correct.";
-        } else if (status === 404) {
-          this.error = `Could not find user with the username '${this.username}'`;
-        } else {
-          alert(
-            "A server error has occured. The devs are looking into it right now."
-          );
-        }
-      }
+    login() {
+      this.$store.dispatch("LOGIN_USER", {
+        username: this.username,
+        pass: this.password,
+      });
+    },
+  },
+  computed: {
+    error() {
+      return this.$store.getters.errorMessage;
     },
   },
 };
 </script>
+
 <style scoped>
 .page-container {
   height: 100vh;
@@ -88,13 +71,13 @@ export default {
 .container {
   margin: 0 auto;
   margin-top: 30px;
-  height: 70%;
+  height: 90%;
   width: 40%;
   border: 1px solid rgb(214, 197, 215);
   display: flex;
   justify-content: center;
   padding: 10px;
-  background: #fafafa;
+  background-color: #fafafa;
   box-shadow: 6px 6px grey;
 }
 
@@ -102,8 +85,8 @@ export default {
   font-size: 16px;
   text-align: center;
   font-weight: 400;
-  width: 60%;
-  background: rgb(231, 174, 174);
+  width: 90%;
+  background-color: rgb(231, 174, 174);
   padding: 5px;
   border-radius: 8px;
 }
@@ -152,11 +135,11 @@ button {
   padding-right: 15px;
   border-radius: 18px;
   border: 2px solid #c4c1e0;
-  background: whitesmoke;
+  background-color: whitesmoke;
 }
 
 button:hover {
-  background: #c4c1e0;
+  background-color: #c4c1e0;
   border: 2px solid white;
   cursor: pointer;
   color: white;

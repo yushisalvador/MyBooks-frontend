@@ -50,7 +50,7 @@ export default {
   methods: {
     async register() {
       if (this.username.length < 5 || this.password.length < 5) {
-        alert("username & password must contain at least 6 characters!");
+        this.error = "username & password must contain at least 6 characters!";
       }
       try {
         await axios.post("auth/register", {
@@ -61,14 +61,14 @@ export default {
         await this.$router.push("/login");
       } catch (error) {
         const status = error.response.status;
-        console.log(error);
         if (status === 409) {
           this.error =
             "A user with this username already exists. Please choose a different username.";
         } else if (status === 401) {
           this.error = "Username and password are required!";
         } else {
-          alert("Failed to sign up. This is likely due to a server error.");
+          this.error =
+            "Failed to sign up. This is likely due to a server error.";
         }
       }
     },
@@ -77,6 +77,43 @@ export default {
 </script>
 
 <style scoped>
+form {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+input {
+  margin: 4px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  margin: 4px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 18px;
+  border: 2px solid #c4c1e0;
+  background-color: whitesmoke;
+}
+
+button:hover {
+  background-color: #c4c1e0;
+  border: 2px solid white;
+  cursor: pointer;
+  color: white;
+  margin-bottom: 4px;
+}
+
 .page-wrapper {
   height: 100vh;
   width: 100vw;
@@ -106,7 +143,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background: #fafafa;
+  background-color: #fafafa;
   box-shadow: 6px 6px grey;
 }
 
@@ -124,46 +161,10 @@ export default {
   text-align: center;
   font-weight: 400;
   width: 80%;
-  background: rgb(231, 174, 174);
+  background-color: rgb(231, 174, 174);
   padding: 5px;
   border-radius: 8px;
   margin-top: 10px;
-}
-form {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  margin-top: 10px;
-}
-
-input {
-  margin: 4px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-button {
-  margin: 4px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 18px;
-  border: 2px solid #c4c1e0;
-  background: whitesmoke;
-}
-
-button:hover {
-  background: #c4c1e0;
-  border: 2px solid white;
-  cursor: pointer;
-  color: white;
-  margin-bottom: 4px;
 }
 
 @media only screen and (max-width: 900px) {
