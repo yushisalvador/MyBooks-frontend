@@ -22,17 +22,14 @@ export default {
 <style scoped>
 .btn {
   border: 2px solid white;
-  background: #cdbedd;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 15px;
-  padding-right: 15px;
+  background-color: #cdbedd;
+  padding: 8px 15px;
   margin: 4px;
   border-radius: 4px;
 }
 
 .btn:hover {
-  background: #c1a0ef;
+  background-color: #c1a0ef;
   border: 2px solid rgb(234, 198, 222);
   cursor: pointer;
   color: white;

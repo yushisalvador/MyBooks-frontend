@@ -2,6 +2,9 @@
   <div v-if="user">
     <Modal header="Add a book!" />
   </div>
+
+  <h2 class="error" v-if="error">{{ error }}</h2>
+
   <div class="table-container">
     <table>
       <tr>
@@ -11,7 +14,7 @@
         <th>Date Finished</th>
         <th v-if="user">Options</th>
       </tr>
-      <tr :key="book.id" v v-for="book in allBooks">
+      <tr :key="book.id" v v-for="book in books.data">
         <td>
           {{ book.author }}
         </td>
@@ -46,32 +49,29 @@
 </template>
 
 <script>
-import axios from "axios";
 import Modal from "./Modal.vue";
-import { mapGetters } from "vuex";
 import EditForm from "./EditForm.vue";
 
 export default {
   name: "AllBooks",
   props: {
-    allBooks: Array,
     header: String,
   },
+  components: { Modal, EditForm },
   data() {
     return {
       editId: null,
     };
   },
   methods: {
-    async deleteBook(id) {
-      try {
-        if (confirm("Are you sure?")) {
-          await axios.delete(`books?id=${id}`);
-          alert("Done!");
-        }
-      } catch (error) {
-        console.log(error);
+    fetchBooks() {
+      return this.$store.dispatch("GET_ALL_BOOKS");
+    },
+    deleteBook(id) {
+      if (confirm("Are you sure?")) {
+        return this.$store.dispatch("DELETE_BOOK", id);
       }
+      return;
     },
     manageForm(id) {
       if (id === this.editId) {
@@ -81,9 +81,19 @@ export default {
       }
     },
   },
-  components: { Modal, EditForm },
   computed: {
-    ...mapGetters(["user"]),
+    user() {
+      return this.$store.getters.user;
+    },
+    books() {
+      return this.$store.getters.books;
+    },
+    error() {
+      return this.$store.getters.errorMessage;
+    },
+  },
+  created() {
+    this.fetchBooks();
   },
 };
 </script>
@@ -105,7 +115,7 @@ table {
 th {
   border: 2px solid #b29ae3;
   padding: 10px;
-  background: whitesmoke;
+  background-color: whitesmoke;
 }
 
 th:hover {
@@ -115,13 +125,13 @@ th:hover {
 button {
   margin: 2px;
   padding: 4px;
-  background: #cdbeea;
+  background-color: #cdbeea;
   border-radius: 4px;
   border: 2px solid white;
 }
 
 button:hover {
-  background: #c1a0ef;
+  background-color: #c1a0ef;
   cursor: pointer;
   border: 2px solid rgb(234, 198, 222);
   color: white;
@@ -138,7 +148,7 @@ button:hover {
 }
 
 .edit {
-  background: white;
+  background-color: white;
   border: solid 1px rgb(241, 173, 241);
   position: absolute;
   padding: 15px;
@@ -150,5 +160,13 @@ button:hover {
 .edit-option {
   margin-right: 5px;
   width: 70px;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>

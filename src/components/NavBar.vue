@@ -18,22 +18,17 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import axios from "axios";
-
 export default {
   name: "NavBar",
   methods: {
-    async logout() {
-      await axios.delete(`auth/logout?id=${this.user.id}`);
-      await this.$store.dispatch("SET_USER", null);
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("user");
-      await this.$router.push("/login");
+    logout() {
+      return this.$store.dispatch("LOGOUT_USER");
     },
   },
   computed: {
-    ...mapGetters(["user"]),
+    user() {
+      return this.$store.getters.user;
+    },
   },
 };
 </script>
@@ -55,7 +50,7 @@ nav {
   text-decoration: none;
   color: black;
   padding: 10px 20px;
-  background: #c4c1e0;
+  background-color: #c4c1e0;
   border: 1px solid #885df1;
   border-radius: 25px;
   padding-bottom: 5px;
@@ -67,7 +62,7 @@ nav {
 }
 
 .active {
-  background: rgb(225, 225, 234);
+  background-color: rgb(225, 225, 234);
   color: rgb(112, 3, 112);
   border: 2px solid rgb(112, 3, 112);
 }
