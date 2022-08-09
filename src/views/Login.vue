@@ -2,10 +2,12 @@
   <div class="page-container">
     <div class="container">
       <div class="sub-container">
-        <img :src="bookSVG" class="shelves" />
+        <header>
+          <img :src="bookSVG" class="shelves" />
+          <div class="welcome">Welcome back!</div>
+          <p class="login-text">Login to your account.</p>
+        </header>
 
-        <div class="welcome">Welcome back!</div>
-        <p class="login-text">Login to your account.</p>
         <p v-if="error" class="error">{{ error }}</p>
 
         <form @submit.prevent="login">

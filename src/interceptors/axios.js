@@ -1,4 +1,3 @@
-import { router } from "@/main";
 import axios from "axios";
 import store from "../vuex";
 
@@ -34,7 +33,6 @@ axios.interceptors.response.use(
       // if refreshing doesn't work
       if (!status) {
         store.dispatch("LOGOUT_USER");
-        router.replace("/login");
       }
     }
 

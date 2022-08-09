@@ -14,7 +14,7 @@
         <th>Date Finished</th>
         <th v-if="user">Options</th>
       </tr>
-      <tr :key="book.id" v v-for="book in books.data">
+      <tr :key="book.id" v v-for="book in books">
         <td>
           {{ book.author }}
         </td>

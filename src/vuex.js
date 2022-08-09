@@ -70,7 +70,7 @@ const store = createStore({
     async GET_ALL_BOOKS({ commit }) {
       try {
         let books = await axios.get("api/books");
-        commit("setAllBooks", books);
+        commit("setAllBooks", books.data);
       } catch (error) {
         commit("setErrorMessage", error);
       }
@@ -79,7 +79,7 @@ const store = createStore({
     async GET_USER_BOOKS({ commit }, username) {
       try {
         let myBooks = await axios.get(`api/mybooks?username=${username}`);
-        commit("setUserBooks", myBooks);
+        commit("setUserBooks", myBooks.data);
       } catch (error) {
         if (error.response.status === 403) {
           let message = "Your session expired. Please log in again.";
@@ -122,7 +122,7 @@ const store = createStore({
       let message;
       try {
         await axios.put(`api/books/${id}`, payload);
-        this.GET_ALL_BOOKS({ commit: commit });
+        commit("updateBook", { id, payload });
       } catch (error) {
         if (error.response.status === 404) {
           message = "Please complete the form!";
@@ -157,6 +157,16 @@ const store = createStore({
     },
     setErrorMessage(state, error) {
       state.error = error;
+    },
+    updateBook(state, { bookId, payload }) {
+      let newBooks = state.books.map((book) => {
+        if (book.id === bookId) {
+          book.date_finished = payload.date_finished;
+          state.books = newBooks;
+          return;
+        }
+        return state.books;
+      });
     },
   },
 });
