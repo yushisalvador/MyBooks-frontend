@@ -153,20 +153,19 @@ const store = createStore({
       state.userBooks = userBooks;
     },
     addBook(state, book) {
-      state.books = state.books.push(book);
+      state.books = [...state.books, book];
     },
     setErrorMessage(state, error) {
       state.error = error;
     },
-    updateBook(state, { bookId, payload }) {
+    updateBook(state, { id, payload }) {
       let newBooks = state.books.map((book) => {
-        if (book.id === bookId) {
-          book.date_finished = payload.date_finished;
-          state.books = newBooks;
-          return;
+        if (book.id === id) {
+          return { ...book, date_finished: payload.date_finished };
         }
-        return state.books;
+        return book;
       });
+      state.books = newBooks;
     },
   },
 });
