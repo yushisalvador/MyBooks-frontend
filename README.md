@@ -52,5 +52,5 @@ password: password
 ## To-do
 * Write tests
 * Improve UI 
-* Automatic update of states
+* Improve state management
 
