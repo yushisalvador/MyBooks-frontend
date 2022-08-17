@@ -95,6 +95,11 @@ export default {
   created() {
     this.getMyBooks();
   },
+  watch: {
+    myBooks() {
+      this.getMyBooks();
+    },
+  },
 };
 </script>
 
