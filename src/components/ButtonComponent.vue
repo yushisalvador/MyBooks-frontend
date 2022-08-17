@@ -12,7 +12,8 @@ export default {
     className: String,
   },
   methods: {
-    onClick() {
+    onClick(e) {
+      e.preventDefault();
       this.$emit("btn-click");
     },
   },
