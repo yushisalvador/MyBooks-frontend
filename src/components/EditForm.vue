@@ -1,5 +1,5 @@
 <template>
-  <p v-if="errorMessage" class="error">{{ error }}</p>
+  <p v-if="error" class="error">{{ error }}</p>
   <form>
     <label>Date Finished</label>
     <input type="date" v-model="date_finished" />
