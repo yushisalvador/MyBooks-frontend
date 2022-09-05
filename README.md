@@ -15,6 +15,8 @@
 ## Technologies
 - Vue 3.2
 - Axios
+- CSS
+- Node
 
 ## Setup
 * Clone the repository by running the following on your terminal.
